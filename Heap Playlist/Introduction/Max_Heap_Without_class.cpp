@@ -20,9 +20,35 @@ void insert(vector<int> &heap, int val)
     }
 }
 
+
+void Heapify(vector<int>& heap , int index){
+
+    int n = heap.size();
+    int largest = index;
+
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+
+    if(left < n && heap[left] > heap[largest]) largest = left;
+
+    if(right < n && heap[right] > heap[largest]) largest = right;
+
+    if(index != largest){
+
+        swap(heap[largest] , heap[index]);
+        Heapify(heap , largest);
+    }
+}
+
 void Delete(vector<int>& heap){
 
-    
+    int n = heap.size();
+
+    heap[0] = heap[n - 1];
+
+    heap.pop_back();
+
+    Heapify(heap , 0);
 }
 
 int main()
@@ -39,7 +65,17 @@ int main()
     // Printing the Max Heap
     for (int i = 0; i < heap.size(); i++)
     {
-        cout << heap[i] << endl;
+        cout << heap[i] << " ";
+    }
+
+    cout << endl;
+
+    Delete(heap);
+
+    // Printing the Max Heap after deletion
+    for (int i = 0; i < heap.size(); i++)
+    {
+        cout << heap[i] << " ";
     }
 
     cout << endl;
